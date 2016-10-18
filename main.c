@@ -62,12 +62,12 @@
 #define MaxCoulmn	   80        
 #define MaxRow	  	   20       
 
-#define LengthOfStartSnake     8
+#define LengthOfStartSnake     3
 		 
 /*********************************************/
 
 void GameOver(u16 (*Locals16_Inti)[MaxCoulmn],u8 *PtrLocal_u8Key,u8 *PtrLocal_u8RandomFlagFunc,u16 *PtrLocal_u16CurrentScore,u8 *PtrLocal_u16GameOver,u16 *PtrLocalu16_HighScore,u16 *PtrLocal_u8HeadVal,u16 *PtrLocal_u8TailVal,u8* PtrLocal_u8HeadRowPostion,u8* PtrLocal_u8ColHeadPostion);
-void Intialization(u16 (*Locals16_Inti)[MaxCoulmn],u16 *PtrLocal_u16CurrentScore,u16 *PtrLocalu16_HighScore,u16 *PtrLocal_u8HeadVal,u16 *PtrLocal_u8TailVal,u8* PtrLocal_u8HeadRowPostion,u8* PtrLocal_u8ColHeadPostion);
+void Intialization(u16 (*Locals16_Inti)[MaxCoulmn],u16 *PtrLocal_u16CurrentScore,u16 *PtrLocalu16_HighScore,u16 *PtrLocal_u8HeadVal,u8* PtrLocal_u8HeadRowPostion,u8* PtrLocal_u8ColHeadPostion);
 void RectangularSystem(u16 (*Locals16_ArrRecSys)[MaxCoulmn],u16 *PtrLocal_u16Score,u16 *PtrLocalu16_HighScore,u16 *PtrLocal_u8HeadVal,u16 *PtrLocal_u8TailVal,u8* PtrLocal_u8HeadRowPostion,u8* PtrLocal_u8CoHeadlPostion);
 void KeyDecision(u16 (*KeyDecision)[MaxCoulmn],u8 *PtrLocal_u8GameOver,u16 *PtrLocalu16_HighScore,u16 *PtrLocal_u16Score,u8 *PtrLocal_u8RandomFlagFunc,u16 *PtrLocal_u8HeadVal,u16 *PtrLocal_u8TailVal,u8 *PtrLocal_u8Key,u8* PtrLocal_u8HeadRow,u8* PtrLocal_u8HeadCol);
 void RandomPoint(u16 (*Locals16_RandPoi)[MaxCoulmn],u8 *PtrLocal_u8RandomFlagFunc);
@@ -79,8 +79,8 @@ u16  HighScoreOpenFile(void);
 
 int main(void)
 {
-	u16 Locals16_ArrGame[MaxRow][MaxCoulmn]={0},Local_u16CurrentScore,Local_u16HighScore=0,Local_u8HeadVal=HeadVal*LengthOfStartSnake/*point=2 */,Local_u8TailVal=TailVal;	;
-	u8 Local_u8RowHeadPostion,Local_u8ColHeadPostion,Local_u8SnakeLength=LengthOfStartSnake;
+	u16 Locals16_ArrGame[MaxRow][MaxCoulmn]={0},Local_u16CurrentScore,Local_u16HighScore=0,Local_u8HeadVal=HeadVal*LengthOfStartSnake/*point=2 */,Local_u8TailVal=LessThanNextPoint;	
+	u8 Local_u8RowHeadPostion,Local_u8ColHeadPostion;
 	u8 Local_u8PressedKey=Left,RandomFlag=Open,Local_u8GameOver=No,Local_u8Speed=NormalSpeed;
 	 
 	system("Cls");
@@ -89,7 +89,7 @@ int main(void)
 	printf("			CopyRights:Ahmed Samir Elmenshawy						 \n\n");
 	system("Pause");
     system("Cls");
-	Intialization(Locals16_ArrGame,&Local_u16CurrentScore,&Local_u16HighScore,&Local_u8HeadVal,&Local_u8TailVal,&Local_u8RowHeadPostion,&Local_u8ColHeadPostion);//intailize snake size 
+	Intialization(Locals16_ArrGame,&Local_u16CurrentScore,&Local_u16HighScore,&Local_u8HeadVal,&Local_u8RowHeadPostion,&Local_u8ColHeadPostion);//intailize snake size 
 	while(Local_u8GameOver==No)
 	{
 		GoToColRow(ZeroRow,ZeroCol);
@@ -125,11 +125,12 @@ void GameOver(u16 (*Locals16_Inti)[MaxCoulmn],u8 *PtrLocal_u8Key,u8 *PtrLocal_u8
 		Local_u8KeyPressed=getch_Func();
 		if(Local_u8KeyPressed==Enter)
 		{
+			*PtrLocal_u8TailVal=0;
 			system("Cls");//clear Screen
 			*PtrLocal_u16GameOver=No;
 			*PtrLocal_u8RandomFlagFunc=Open;
 			*PtrLocal_u8Key=Left;
-			Intialization(Locals16_Inti,PtrLocal_u16CurrentScore,PtrLocalu16_HighScore,PtrLocal_u8HeadVal,PtrLocal_u8TailVal,PtrLocal_u8HeadRowPostion,PtrLocal_u8ColHeadPostion);
+			Intialization(Locals16_Inti,PtrLocal_u16CurrentScore,PtrLocalu16_HighScore,PtrLocal_u8HeadVal,PtrLocal_u8HeadRowPostion,PtrLocal_u8ColHeadPostion);
 			break;
 		}
 		else if(Local_u8KeyPressed==Esc)
@@ -168,13 +169,12 @@ u16 HighScoreOpenFile(void)
 		return Localu16_Highscore;
 	}
 /*********************************************/
-void Intialization(u16 (*Locals16_Inti)[MaxCoulmn],u16 *PtrLocal_u16CurrentScore,u16 *PtrLocalu16_HighScore,u16 *PtrLocal_u8HeadVal,u16 *PtrLocal_u8TailVal,u8* PtrLocal_u8HeadRowPostion,u8* PtrLocal_u8ColHeadPostion)
+void Intialization(u16 (*Locals16_Inti)[MaxCoulmn],u16 *PtrLocal_u16CurrentScore,u16 *PtrLocalu16_HighScore,u16 *PtrLocal_u8HeadVal,u8* PtrLocal_u8HeadRowPostion,u8* PtrLocal_u8ColHeadPostion)
 {
 	u8 Local_u8Col,Localu8_CounterRow,Local_u8HeadVal=HeadVal*LengthOfStartSnake;
 	
 	*PtrLocal_u8HeadVal=HeadVal*LengthOfStartSnake;
 	system("color A");//green color	
-	
 	system("Cls");//clear Screen
 	
 	for(Localu8_CounterRow=MaxRow;Localu8_CounterRow>0;Localu8_CounterRow--)//Vetrical line
@@ -186,11 +186,11 @@ void Intialization(u16 (*Locals16_Inti)[MaxCoulmn],u16 *PtrLocal_u16CurrentScore
 	}	
 	for(Local_u8Col=SnakeStartFromCol;Local_u8Col< (LengthOfStartSnake+SnakeStartFromCol);Local_u8Col++)//4+20
 	{
-		Locals16_Inti[SnakeStartFromRow][Local_u8Col]=Local_u8HeadVal;// 1 2 3 4
+		Locals16_Inti[SnakeStartFromRow][Local_u8Col]=Local_u8HeadVal;//
 		Local_u8HeadVal-=LessThanNextPoint;//every point less than next point by 2 
 	}
 	*PtrLocal_u16CurrentScore=0;
-	*PtrLocal_u8TailVal=LessThanNextPoint;//last one in snake,start from 2	
+	//*PtrLocal_u8TailVal=LessThanNextPoint;//last one in snake,start from 2	
 	
 	*PtrLocal_u8ColHeadPostion=SnakeStartFromCol;//+ beacuse we move reverse array//22
 	
@@ -230,7 +230,6 @@ void KeyDecision(u16 (*KeyDecision)[MaxCoulmn],u8 *PtrLocal_u8GameOver,u16 *PtrL
 		}
 		else if(KeyDecision[* PtrLocal_u8HeadRow ][*PtrLocal_u8HeadCol-1]==EmptyPoint)
 		{
-			//printf(" %d  ",*PtrLocal_u8HeadCol);
 			*PtrLocal_u8HeadVal+=LessThanNextPoint;
 			KeyDecision[* PtrLocal_u8HeadRow ][--*PtrLocal_u8HeadCol]=*PtrLocal_u8HeadVal;//next postion take new head val
 		}	
