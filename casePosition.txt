@@ -1,0 +1,25 @@
+case Right:
+		
+if(KeyDecision[* PtrLocal_u8HeadRow][*PtrLocal_u8HeadCol+1]==EmptyPoint)
+{
+KeyDecision[* PtrLocal_u8HeadRow ][++*PtrLocal_u8HeadCol]=SnakeValue;//next postion take snake value
+
+case Up:
+		
+if(KeyDecision[* PtrLocal_u8HeadRow-1][*PtrLocal_u8HeadCol]==EmptyPoint)
+{
+KeyDecision[--* PtrLocal_u8HeadRow ][*PtrLocal_u8HeadCol]=SnakeValue;//next postion take snake value
+
+case Dn:
+		
+if(KeyDecision[* PtrLocal_u8HeadRow+1][*PtrLocal_u8HeadCol]==EmptyPoint)
+		{
+KeyDecision[++* PtrLocal_u8HeadRow ][*PtrLocal_u8HeadCol]=SnakeValue;//next postion take snake value
+
+case left:
+if(KeyDecision[* PtrLocal_u8HeadRow ][*PtrLocal_u8HeadCol-1]==EmptyPoint)
+		{
+KeyDecision[* PtrLocal_u8HeadRow ][--*PtrLocal_u8HeadCol]=SnakeValue;//next postion take snake value
+
+
+								
