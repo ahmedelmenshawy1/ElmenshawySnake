@@ -1,0 +1,13 @@
+_kbhit():kbhit function is used to determine if a key has been pressed or not
+while (!kbhit())
+      printf("You haven't pressed a key.\n");
+/***********************************************/
+
+
+
+
+
+
+
+
+
